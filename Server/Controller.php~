@@ -29,7 +29,7 @@ class Controller {
 	}
 
 	private function params() {
-		$action = isset($_POST['action']) ? $_POST['action'] : 'Null'; 
+		$action = isset($_POST['action']) ? $_POST['action'] : 'login'; 
 		$params = array(
 			'action' => $action
 			);

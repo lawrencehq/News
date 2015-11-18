@@ -16,8 +16,8 @@ class Login_Action {
 
 	private function getParams() {
 		$parameters = array(
-					'email' => isset($_POST['email']) ? $_POST['email'] : 'Null',
-					'pass' => isset($_POST['pass']) ? $_POST['pass'] : 'Null'
+					'email' => isset($_POST['email']) ? $_POST['email'] : 'enthalqy@gmail.com',
+					'pass' => isset($_POST['pass']) ? $_POST['pass'] : '123456'
 					);
 		return $parameters;
 	}
