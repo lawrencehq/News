@@ -12,14 +12,20 @@ class User_DAO extends MysqlConnection {
 		$this->connection = new MysqlConnection();
 	}
 
-	public function getUserId($userId) {
-		$sql = "select * from User where userId=".$userId;
-		$result = query($sql);
+	public function add($email, $pass, $username) {
+		$sql = "insert into user values (default,'".$email."','".$pass."','".$username."',default)";
+		$result = $this->connection->query($sql);
+		return $result;
+	}
+
+	public function getUserById($userId) {
+		$sql = "select * from user where userId=".$userId;
+		$result = $this->connection->query($sql);
 		return $result;
 	}
 
 	public function checkPass($email, $pass) {
-		$sql = "select * from User where email='".$email."' and password='".$pass."'";
+		$sql = "select * from user where email='".$email."' and password='".$pass."'";
 		$result = $this->connection->query($sql);
 		return $result;
 	}

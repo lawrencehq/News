@@ -9,7 +9,6 @@
 
 require_once 'init.php';
 
-
 $boot = Controller::getInstance();
 $boot->run();
 

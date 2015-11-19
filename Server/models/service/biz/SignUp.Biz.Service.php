@@ -1,21 +1,22 @@
 <?php
 /**
- * @file Login.Biz.Service.php
+ * @file SignUp.Biz.Service.php
  * @author hq
- * @date 2015/11/18
+ * @date 2015/11/19
  *
  **/
-class Login_Biz_Service {
+class SignUp_Biz_Service {
 	private $userData;
 
 	public function execute($params) {
 		$this->init();
-		$result = $this->userData->checkPassword($params['email'], $params['pass']);
+		$result = $this->userData->addUser($params['email'], $params['pass'], $params['username']);
 		$responce;
-		if ($result != null) {
+		if ($result != 0) {
+			$user = $this->userData->getUserById($result);
 			$responce = array(
 						'status' => true,
-						'data' => $result[0]);
+						'data' => $user[0]);
 		} else {
 			$responce = array(
 						'status' => false,

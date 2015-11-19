@@ -9,7 +9,8 @@ class Controller {
 	static $instance;
 
 	public $Actions = array(
-			'login' => 'Login_Action'
+			'login' => 'Login_Action',
+			'signup' => 'SignUp_Action'
 		);
 	
 	public function __construct() {

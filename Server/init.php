@@ -16,8 +16,10 @@ require_once('Controller.php');
 require_once(MOBILE_ROOT.'/library/MysqlConnection.php');
 
 require_once(MOBILE_ROOT.'/actions/Login.Action.php');
+require_once(MOBILE_ROOT.'/actions/SignUp.Action.php');
 
 require_once(MOBILE_ROOT.'/models/service/biz/Login.Biz.Service.php');
+require_once(MOBILE_ROOT.'/models/service/biz/SignUp.Biz.Service.php');
 
 require_once(MOBILE_ROOT.'/models/service/data/User.Data.Service.php');
 
