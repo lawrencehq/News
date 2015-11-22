@@ -15,14 +15,14 @@ import org.kymjs.kjframe.http.HttpParams;
 public class UserApi {
 
 
-    public static void signUp(String email, String password, HttpTaskListener listener) {
+    public static void signUp(String email, String password, String username, HttpTaskListener listener) {
         HttpConfig config = new HttpConfig();
         config.cacheTime = 0;
         HttpParams params = new HttpParams();
         params.put("action", "signup");
         params.put("email", email);
         params.put("pass", password);
-        params.put("username", "default");
+        params.put("username", username);
 
         HttpRequest.execute(config, params, listener);
     }

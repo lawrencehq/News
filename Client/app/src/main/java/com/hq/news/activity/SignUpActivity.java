@@ -1,8 +1,6 @@
 package com.hq.news.activity;
 
 import android.content.Intent;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.view.View;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
@@ -22,38 +20,29 @@ import org.kymjs.kjframe.ui.BindView;
 import org.kymjs.kjframe.ui.ViewInject;
 import org.kymjs.kjframe.utils.StringUtils;
 
+public class SignUpActivity extends KJActivity {
 
-/**
- * The login view of app.
- * @author hq
- * @date 20/11/2015
- * @since 1.0
- */
-public class LoginActivity extends KJActivity {
-
-    @BindView(id = R.id.email)
+    @BindView(id = R.id.sign_up_email)
     private AutoCompleteTextView mEtEmail;
-    @BindView(id = R.id.password)
+    @BindView(id = R.id.sign_up_password)
     private EditText mEtPass;
-    @BindView(id = R.id.email_sign_in_button, click = true)
-    private Button mBtnSignIn;
+    @BindView(id = R.id.sign_up_username)
+    private EditText mEtUsername;
     @BindView(id = R.id.email_sign_up_button, click = true)
-    private Button mBtnSignUp;
+    private Button signUp;
 
     @Override
     public void setRootView() {
-        setContentView(R.layout.activity_login);
+        setContentView(R.layout.activity_sign_up);
     }
 
     @Override
     public void widgetClick(View v) {
         super.widgetClick(v);
         switch(v.getId()) {
-            case R.id.email_sign_in_button:
-                doLogin(mEtEmail.getText().toString(), mEtPass.getText().toString());
-                break;
             case R.id.email_sign_up_button:
-                doSignUp(mEtEmail.getText().toString(), mEtPass.getText().toString());
+                doSignUp(mEtEmail.getText().toString(), mEtPass.getText().toString(),
+                        mEtUsername.getText().toString());
                 break;
             default:
                 break;
@@ -63,7 +52,7 @@ public class LoginActivity extends KJActivity {
     /**
      * Check input
      */
-    private boolean inputCheck(String email, String password) {
+    private boolean inputCheck(String email, String password, String username) {
         if (StringUtils.isEmpty(email)) {
             ViewInject.toast(getString(R.string.error_field_required));
             return false;
@@ -78,21 +67,28 @@ public class LoginActivity extends KJActivity {
             ViewInject.toast(getString(R.string.password_too_short));
             return false;
         }
+        if (StringUtils.isEmpty(username)) {
+            ViewInject.toast(getString(R.string.error_field_required));
+            return false;
+        } else if (password.length() > 25) {
+            ViewInject.toast(getString(R.string.username_too_long));
+            return false;
+        }
         return true;
     }
 
-    private void doLogin(String email, String password) {
-        if (!inputCheck(email, password)) {
+    private void doSignUp(String email, String password, String username) {
+        if (!inputCheck(email, password, username)) {
             return;
         }
 
-        UserApi.login(email, password, new HttpTaskListener() {
+        UserApi.signUp(email, password, username, new HttpTaskListener() {
             @Override
             public void onSuccess(String content) throws JSONException {
                 UIHelper.saveUser(aty, new Gson().fromJson(content, User.class));
-                ViewInject.toast("Login success. Welcome " + UIHelper.getUser(aty).getUsername());
+                ViewInject.toast("Sign up success. Welcome " + UIHelper.getUser(aty).getUsername());
 
-                Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                Intent intent = new Intent(SignUpActivity.this, MainActivity.class);
                 startActivity(intent);
                 finish();
             }
@@ -102,11 +98,5 @@ public class LoginActivity extends KJActivity {
                 ViewInject.toast(content);
             }
         });
-    }
-
-    private void doSignUp(String email, String password) {
-        Intent intent = new Intent(LoginActivity.this, SignUpActivity.class);
-        startActivity(intent);
-        finish();
     }
 }
